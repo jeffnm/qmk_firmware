@@ -22,19 +22,18 @@ extern keymap_config_t keymap_config;
 enum planck_layers {
   _QWERTY,
   _COLEMAK,
+  _KEYPAD,
   _LOWER,
-  _RAISE,
-  _ADJUST,
-  _KEYPAD
+  _RAISE
 };
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAK,
+  KEYPAD,
   LOWER,
   RAISE,
-  BACKLIT,
-  KEYPAD
+  BACKLIT
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -130,21 +129,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Keypad
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |   7  |   8  |   9  | Bksp |
+ * |      |      |      |      |      |      |      |Bksp  |   7  |   8  |   9  |  /   |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |   4  |   5  |   6  |      |
+ * |      |      |      |      |      |      |      |Return|   4  |   5  |   6  |  *   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |   1  |   2  |   3  |      |
+ * |      |      |      |      |      |      |      |      |   1  |   2  |   3  |  +   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |Lower |    Space    |Raise |   0  |   .  |Return|      |
+ * | Left | Down |  Up  |Right |Lower |    Space    |Raise |   0  |   .  |  Del |  -   |
  * `-----------------------------------------------------------------------------------'
  */
 
 [_KEYPAD] = {
-  {_______, _______, _______, _______, _______, _______, _______, _______, KC_7, KC_8, KC_9, KC_BSPC},
-  {_______, _______, _______, _______, _______, _______, _______, _______, KC_4, KC_5, KC_6, _______},
-  {_______, _______, _______, _______, _______, _______, _______, _______, KC_1, KC_2, KC_3, _______},
-  {_______, _______, _______, _______, LOWER, KC_SPC,  KC_SPC, RAISE, KC_0, KC_DOT, KC_ENT, _______}
+  {_______, _______, _______, _______, _______, _______, _______, KC_BSPC,     KC_7, KC_8,   KC_9,    KC_KP_SLASH},
+  {_______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______, KC_KP_ENTER, KC_4, KC_5,   KC_6,    KC_KP_ASTERISK},
+  {_______, _______, _______, _______, _______, _______, _______, _______,     KC_1, KC_2,   KC_3,    KC_KP_PLUS},
+  {_______, _______, _______, _______, LOWER,   KC_SPC,  KC_SPC,  RAISE,       KC_0, KC_DOT, KC_DEL,  KC_KP_MINUS}
 }
 // [_KEYPAD] = { /* Key Pad */
 //   {KC_ESC,  _______,    MVERSION,   KC_F10,   KC_F11,  KC_F12,   KC_PGUP, KC_KP_ENTER, KC_7, KC_8, KC_9, KC_BSPC},
@@ -171,6 +170,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case KEYPAD:
+      if (record->event.pressed) {
+        print("mode just switched to keypad\n");
+        set_single_persistent_default_layer(_KEYPAD);
+      }
+      return false;
+      break;
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
@@ -191,12 +197,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case KEYPAD:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_KEYPAD);
-      }
-      return false;
-      break;
+
     case BACKLIT:
       if (record->event.pressed) {
         register_code(KC_RSFT);
