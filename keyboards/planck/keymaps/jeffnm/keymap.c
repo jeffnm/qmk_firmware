@@ -172,7 +172,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
-        print("mode just switched to qwerty and this is a huge string\n");
+        // print("mode just switched to qwerty and this is a huge string\n");
         set_single_persistent_default_layer(_QWERTY);
       }
       return false;
@@ -185,14 +185,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case KEYPAD:
       if (record->event.pressed) {
-        print("mode just switched to keypad\n");
+        // print("mode just switched to keypad\n");
         set_single_persistent_default_layer(_KEYPAD);
       }
       return false;
       break;
     case LOWER:
       if (record->event.pressed) {
-        print("lowered\n");
+        // print("lowered\n");
         layer_on(_LOWER);
          update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
@@ -203,7 +203,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case RAISE:
       if (record->event.pressed) {
-        print("raised\n");
+        // print("raised\n");
         layer_on(_RAISE);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
