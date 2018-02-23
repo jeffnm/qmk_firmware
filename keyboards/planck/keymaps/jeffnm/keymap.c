@@ -24,7 +24,8 @@ enum planck_layers {
   _COLEMAK,
   _KEYPAD,
   _LOWER,
-  _RAISE
+  _RAISE,
+  _ADJUST
 };
 
 enum planck_keycodes {
