@@ -142,28 +142,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Keypad
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |Bksp  |   7  |   8  |   9  |  /   |
+ * |      |      |      |      |      |      |      |      |   7  |   8  |   9  |  /   |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |Return|   4  |   5  |   6  |  *   |
+ * |      | Left | Down |  Up  |Right |      |      |      |   4  |   5  |   6  |  *   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |   1  |   2  |   3  |  +   |
+ * |      |      |      |      |      |      |      |      |   1  |   2  |   3  |  -   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Left | Down |  Up  |Right |Lower |    Space    |Raise |   0  |   .  |  Del |  -   |
+ * |      |      |      |      |Lower |      |      |Raise |   0  |   .  |Enter |  +   |
  * `-----------------------------------------------------------------------------------'
  */
 
 [_KEYPAD] = {
-  {_______, _______, _______, _______, _______, _______, _______, KC_BSPC,     KC_7, KC_8,   KC_9,    KC_KP_SLASH},
-  {_______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______, KC_KP_ENTER, KC_4, KC_5,   KC_6,    KC_KP_ASTERISK},
-  {_______, _______, _______, _______, _______, _______, _______, _______,     KC_1, KC_2,   KC_3,    KC_KP_PLUS},
-  {_______, _______, _______, _______, LOWER,   KC_SPC,  KC_SPC,  RAISE,       KC_0, KC_DOT, KC_DEL,  KC_KP_MINUS}
+  {_______, _______, _______, _______, _______, _______, _______, _______,     KC_KP_7, KC_KP_8,   KC_KP_9,    KC_KP_SLASH},
+  {_______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______, _______,     KC_KP_4, KC_KP_5,   KC_KP_6,    KC_KP_ASTERISK},
+  {_______, _______, _______, _______, _______, _______, _______, _______,     KC_KP_1, KC_KP_2,   KC_KP_3,    KC_KP_MINUS},
+  {_______, _______, _______, _______, LOWER,   _______, _______, RAISE,       KC_KP_0, KC_KP_DOT, KC_KP_ENTER,KC_KP_PLUS}
 }
-// [_KEYPAD] = { /* Key Pad */
-//   {KC_ESC,  _______,    MVERSION,   KC_F10,   KC_F11,  KC_F12,   KC_PGUP, KC_KP_ENTER, KC_7, KC_8, KC_9, KC_BSPC},
-//   {KC_LCTL, RANDDIG,   KC_F5,   KC_F6,    KC_F7,   KC_F8,    KC_PGDN, KC_KP_MINUS, KC_4, KC_5, KC_6, KC_PIPE},
-//   {KC_LSFT, RANDALP,   KC_F1,   KC_F2,    KC_F3,   KC_F4,    KC_DEL,  KC_KP_PLUS,  KC_1, KC_2,  KC_3, KC_ENTER},
-//   {KC_TAB,  KC_LALT, ROT_LED, KC_LGUI,  M_LOWER,  KC_SPC,    KC_SPC,  QWERTY,   KC_LEFT, KC_DOWN, KC_UP,  KC_RIGHT}
-// }
 
 
 };
@@ -172,7 +166,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
-        // print("mode just switched to qwerty and this is a huge string\n");
+        print("mode just switched to qwerty and this is a huge string\n");
         set_single_persistent_default_layer(_QWERTY);
       }
       return false;
