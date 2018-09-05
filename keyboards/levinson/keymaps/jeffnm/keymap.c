@@ -13,6 +13,7 @@ extern keymap_config_t keymap_config;
 #define _FN 2
 #define _LOWER 3
 #define _RAISE 4
+#define _HOTKEYS 5
 #define _ADJUST 16
 
 enum custom_keycodes {
@@ -21,6 +22,8 @@ enum custom_keycodes {
   FN,
   LOWER = LT(_LOWER,KC_SPC),
   RAISE = LT(_RAISE,KC_SPC),
+  HBSPC = LT(_HOTKEYS,KC_BSPC),
+  HENT  = LT(_HOTKEYS,KC_ENT),
   ADJUST,
 };
 
@@ -61,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_ESC,           KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
   KC_TAB,           KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
   KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
-  FN,                KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_BSPC, KC_ENT,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
+  FN,               KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_BSPC, KC_ENT,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
 ),
 
 /* Colemak Mod-DH
@@ -72,14 +75,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   D  |   V  | |   M  |   H  |   ,  |   .  |   /  |Shift |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |FN    | Ctrl | Alt  | GUI  |L/Spc |Bksp  | |Enter |R/Spc | Left | Down |  Up  |Right |
+ * |FN    | Ctrl | Alt  | GUI  |L/Spc |H/Bksp| |H/Entr|R/Spc | Left | Down |  Up  |Right |
  * `-----------------------------------------| |-----------------------------------------'
  */
 [_COLEMAK] = LAYOUT( \
-  KC_ESC,           KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC, \
-  KC_TAB,           KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_K,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT, \
-  KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_M,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
-  FN    ,           KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_BSPC, KC_ENT,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
+  KC_ESC,  KC_Q,    KC_W,    KC_F,    KC_P,  KC_B,  KC_J, KC_L,  KC_U,    KC_Y,    KC_SCLN, KC_BSPC, \
+  KC_TAB,  KC_A,    KC_R,    KC_S,    KC_T,  KC_G,  KC_K, KC_N,  KC_E,    KC_I,    KC_O,    KC_QUOT, \
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,  KC_V,  KC_M, KC_H,  KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
+  FN    ,  KC_LCTL, KC_LALT, KC_LGUI, LOWER, HBSPC, HENT, RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
 ),
 
 /* FN
@@ -132,8 +135,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = LAYOUT( \
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, \
   KC_DEL,  _______, _______, _______, _______, _______, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS, \
-  ______, _______, _______, _______, _______, _______, _______, KC_NUHS, KC_NUBS, KC_PGUP, KC_PGDN, BL_STEP, \
+  _______, _______, _______, _______, _______, _______, _______, KC_NUHS, KC_NUBS, KC_PGUP, KC_PGDN, BL_STEP, \
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
+),
+
+/* Hotkeys
+ * ,-----------------------------------------| |-----------------------------------------.
+ * |      |      |  Up  |      |      |      | |      |      |      |      |      |      |
+ * |------+------+------+------+------+------| |------+------+------+------+------+------|
+ * |      | Left | Down |Right |      |      | |      | Left | Down |  Up  |Right |      |
+ * |------+------+------+------+------+------| |------+------+------+------+------+------|
+ * |      |      |      |      |      |      | |      |      |      |      |      |      |
+ * |------+------+------+------+------+------| |------+------+------+------+------+------|
+ * |      | Prev | Play | Next |      |      | |      |      | Mute | VoUp | VoDn |      |
+ * `-----------------------------------------| |-----------------------------------------'
+ */
+[_HOTKEYS] = LAYOUT( \
+  _______, _______, KC_UP,   _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______, _______, _______, KC_MUTE, KC_VOLD, KC_VOLU, _______ \
 ),
 
 /* Adjust (Lower + Raise)
