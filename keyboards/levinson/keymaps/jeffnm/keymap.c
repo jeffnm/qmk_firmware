@@ -10,7 +10,7 @@ extern keymap_config_t keymap_config;
 // entirely and just use numbers.
 #define _QWERTY 0
 #define _COLEMAK 1
-#define _KEYPAD 2
+// #define _KEYPAD 2
 #define _LOWER 3
 #define _RAISE 4
 #define _ADJUST 16
@@ -18,7 +18,6 @@ extern keymap_config_t keymap_config;
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAK,
-  KEYPAD,
   LOWER = LT(_LOWER,KC_SPC),
   RAISE = LT(_RAISE,KC_SPC),
   ADJUST,
@@ -82,24 +81,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ADJUST,           KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_BSPC, KC_ENT,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
 ),
 
-/* Keypad
- * ,-----------------------------------------| |-----------------------------------------.
- * |      |      |      |      |      |      | |      |      |   7  |   8  |   9  |  /   |
- * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      | Left | Down |  Up  |Right |      | |      |      |   4  |   5  |   6  |  *   |
- * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |      |      |      | |      |      |   1  |   2  |   3  |  -   |
- * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |      |Lower |      | |      |Raise |   0  |   .  |Enter |  +   |
- * `-----------------------------------------| |-----------------------------------------'
- */
-
-[_KEYPAD] = LAYOUT( \
-  _______, _______, _______, _______, _______, _______, _______, _______,     KC_KP_7, KC_KP_8,   KC_KP_9,    KC_KP_SLASH, \
-  _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______, _______,     KC_KP_4, KC_KP_5,   KC_KP_6,    KC_KP_ASTERISK, \
-  _______, _______, _______, _______, _______, _______, _______, _______,     KC_KP_1, KC_KP_2,   KC_KP_3,    KC_KP_MINUS, \
-  _______, _______, _______, _______, LOWER,   _______, _______, RAISE,       KC_KP_0, KC_KP_DOT, KC_KP_ENTER,KC_KP_PLUS \
-),
 /* Lower
  * ,-----------------------------------------| |-----------------------------------------.
  * |   ~  |   !  |   @  |   #  |   $  |   %  | |   ^  |   &  |   *  |   (  |   )  | Bksp |
@@ -140,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------| |-----------------------------------------.
  * |OSLOCK| Reset|      |      |      |      | |      |      |      |      |      |  Del |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |Aud on|Audoff|AGnorm| |AGswap|Qwerty|Colemk|Keypad|      |      |
+ * |      |      |      |Aud on|Audoff|AGnorm| |AGswap|Qwerty|Colemk|      |      |      |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
  * |      |  F1  |  F2  |  F3  |  F4  |  F5  | |  F6  |      |      |      |      |      |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
@@ -149,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] =  LAYOUT( \
   OSLOCK,  RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL, \
-  _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, KEYPAD,  _______, _______, \
+  _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, _______,  _______, _______, \
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   _______, _______, _______, _______, _______, \
   _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, _______, _______, _______, _______ \
 )
@@ -175,13 +156,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         // persistent_default_layer_set(1UL<<_COLEMAK);
         set_single_persistent_default_layer(_COLEMAK);
-      }
-      return false;
-      break;
-    case KEYPAD:
-      if (record->event.pressed) {
-        // persistent_default_layer_set(1UL<<_COLEMAK);
-        set_single_persistent_default_layer(_KEYPAD);
       }
       return false;
       break;
