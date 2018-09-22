@@ -55,16 +55,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
  * | Tab  |   A  |   S  |   D  |   F  |   G  | |   H  |   J  |   K  |   L  |   ;  |  "   |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  | |   N  |   M  |   ,  |   .  |   /  |Shift |
+ * | Shift|   Z  |   X  |   C  |   V  |   B  | |   N  |   M  |   ,  |   .  |   /  |ShftEn|
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |  FN  | Ctrl | Alt  | GUI  |L/Spc | Bksp | |Enter |R/Spc | Left | Down |  Up  |Right |
+ * |  FN  | Ctrl | Alt  | GUI  |L/Spc |H/Bksp| |H/Entr|R/Spc | Left | Down |  Up  |Right |
  * `-----------------------------------------| |-----------------------------------------'
  */
 [_QWERTY] = LAYOUT( \
   KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,    KC_Y,   KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC, \
   KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,  KC_G,    KC_H,   KC_J,  KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,    KC_N,   KC_M,  KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT, \
-  FN,      KC_LCTL, KC_LALT, KC_LGUI, LOWER, KC_BSPC, KC_ENT, RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
+  FN,      KC_LCTL, KC_LALT, KC_LGUI, LOWER, HBSPC,   HENT,   RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
 ),
 
 /* Colemak Mod-DH
@@ -73,16 +73,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
  * | Tab  |   A  |   R  |   S  |   T  |   G  | |   K  |   N  |   E  |   I  |   O  |  "   |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   D  |   V  | |   M  |   H  |   ,  |   .  |   /  |Shift |
+ * | Shift|   Z  |   X  |   C  |   D  |   V  | |   M  |   H  |   ,  |   .  |   /  |ShftEn|
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |FN    | Ctrl | Alt  | GUI  |L/Spc |H/Bksp| |H/Entr|R/Spc | Left | Down |  Up  |Right |
+ * |  FN  | Ctrl | Alt  | GUI  |L/Spc |H/Bksp| |H/Entr|R/Spc | Left | Down |  Up  |Right |
  * `-----------------------------------------| |-----------------------------------------'
  */
 [_COLEMAK] = LAYOUT( \
   KC_ESC,  KC_Q,    KC_W,    KC_F,    KC_P,  KC_B,  KC_J, KC_L,  KC_U,    KC_Y,    KC_SCLN, KC_BSPC, \
   KC_TAB,  KC_A,    KC_R,    KC_S,    KC_T,  KC_G,  KC_K, KC_N,  KC_E,    KC_I,    KC_O,    KC_QUOT, \
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,  KC_V,  KC_M, KC_H,  KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT, \
-  FN    ,  KC_LCTL, KC_LALT, KC_LGUI, LOWER, HBSPC, HENT, RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
+  FN,      KC_LCTL, KC_LALT, KC_LGUI, LOWER, HBSPC, HENT, RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
 ),
 
 /* FN
@@ -199,7 +199,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-      case FN:
+    case FN:
       if (record->event.pressed){
         layer_on(_FN);
       } else {
